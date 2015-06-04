@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
@@ -28,6 +31,9 @@ public class MAHLIServer extends RoverServerRunnable {
 		Boolean imageStoreStatus = false;
 		Boolean imageReadStatus = false;
 		Boolean exitStatus = false;
+		File capturedFile = null;
+		File source = new File("images");
+		File destination = new File("captured");
 		int port_power = 9013;
 
 		try {
@@ -237,6 +243,10 @@ public class MAHLIServer extends RoverServerRunnable {
             		{
 		            	imageCaptureStatus = true;
 		            	// System.out.println("Image Captured");
+		            	Random rand = new Random();
+		            	int index = rand.nextInt(source.list().length-1) + 1;
+		        		capturedFile = new File(source.list()[index]);
+		        		System.out.println(capturedFile);
 		            	outputToAnotherObject.writeObject("Image Captured");
 
             		}
@@ -250,7 +260,16 @@ public class MAHLIServer extends RoverServerRunnable {
             		{
 		            	imageStoreStatus = true;
 		            	// System.out.println("Image Stored");
-		            	outputToAnotherObject.writeObject("Image Stored");
+		            	if(capturedFile != null){
+		            		System.out.println(capturedFile);
+		            		Files.copy(new File(source.toString()+"/"+capturedFile.toString()).toPath(), 
+		            				new File(destination.toString()+"/"+ capturedFile.toString()).toPath(), 
+		            				StandardCopyOption.REPLACE_EXISTING);
+		            		outputToAnotherObject.writeObject("Image Stored");
+		            		capturedFile = null;
+		            		}
+		            	else
+		            		outputToAnotherObject.writeObject("No image captured");
             		}
 		            else
             		{
@@ -260,12 +279,18 @@ public class MAHLIServer extends RoverServerRunnable {
 		                     break;
 		            case 11: if(camOnStatus)
             		{
-		            	File file = new File("CS540ColorTest.jpg");
-		    		    ProcessImage objprocessImage=new ProcessImage();
-		            	imageReadStatus = true;
-		            	// System.out.println("Image Read");
-		            	//outputToAnotherObject.writeObject("Image Read");
-		            	outputToAnotherObject.writeObject("COLOR OF IMAGE IS "+objprocessImage.getImageColor(file));
+		            	if(destination.list().length>0){
+			            	File file = new File(destination.toString()+"/"+destination.list()[0]);
+			    		    ProcessImage objprocessImage=new ProcessImage();
+			            	imageReadStatus = true;
+			            	System.out.println(file.toString());
+			            	//outputToAnotherObject.writeObject("Image Read");
+			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and the "+"COLOR OF IMAGE IS "+objprocessImage.getImageColor(file));
+			            	file.delete();
+			            }
+		            	else
+		            		outputToAnotherObject.writeObject("Image needs to be Captured First");
+		            		
             		}
 		            else
             		{

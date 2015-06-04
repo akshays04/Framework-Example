@@ -11,12 +11,13 @@ import javax.imageio.ImageIO;
 public class ProcessImage {
 	
 	@SuppressWarnings("unchecked")
-	public Color getImageColor(File imagePath) {
+	public HashSet getImageColor(File imagePath) {
         int color=0;
         int count=0;
+        HashSet hs=new HashSet();
 		try {
 			@SuppressWarnings("rawtypes")
-			HashSet hs=new HashSet();
+			
 			BufferedImage image = ImageIO.read(imagePath);
 				color = image.getRGB(0, 0);
 				for (int r = 0; r < image.getHeight(); r += 1) {
@@ -36,7 +37,7 @@ public class ProcessImage {
 			
 		
 
-        return new Color(color);
+        return hs;
     }
 
 

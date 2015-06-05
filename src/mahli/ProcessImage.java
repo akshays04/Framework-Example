@@ -3,11 +3,17 @@ package mahli;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import javax.imageio.ImageIO;
+
 import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class ProcessImage {
 	
@@ -17,6 +23,7 @@ public class ProcessImage {
         int count=0;
         ColorUtils objColorUtils=new ColorUtils();
         HashSet hs=new HashSet();
+        HashMap hm=new HashMap();
 		try {
 			@SuppressWarnings("rawtypes")
 			
@@ -36,12 +43,37 @@ public class ProcessImage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+		String Minfo="";
 		Iterator itr = hs.iterator();
 		while(itr.hasNext()){
 			Color colorobj=(Color)itr.next();
-			System.out.println(objColorUtils.getColorNameFromRgb(colorobj.getRed(), colorobj.getGreen(), colorobj.getBlue()));
+			Minfo=objColorUtils.getColorNameFromRgb(colorobj.getRed(), colorobj.getGreen(), colorobj.getBlue());
+			Integer c=0;
+			String Mineral=Minfo.split(":")[1];
+			//System.out.println(Mineral);
+			if(hm.containsKey(Mineral))
+			{
+				c=(Integer)hm.get(Mineral);
+				hm.put(Mineral,c+1);
+			}
+			else
+			{
+			hm.put(Mineral,1);
+			}
 		  }
+		System.out.println(hm);
+		JSONObject obj = new JSONObject(hm);
+		
+		try {
+			FileWriter file = new FileWriter("Mineral.json");
+			file.write(obj.toJSONString());
+			System.out.println("Data has been written to file Mineral.JSON");
+			file.flush();
+			file.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         
     }

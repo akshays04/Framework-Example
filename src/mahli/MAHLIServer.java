@@ -285,7 +285,8 @@ public class MAHLIServer extends RoverServerRunnable {
 			            	imageReadStatus = true;
 			            	System.out.println(file.toString());
 			            	//outputToAnotherObject.writeObject("Image Read");
-			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and the "+"COLOR OF IMAGE IS "+objprocessImage.getImageColor(file));
+			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and the "+"COLOR OF IMAGE IS ");
+			            	objprocessImage.getImageColor(file);
 			            	file.delete();
 			            }
 		            	else

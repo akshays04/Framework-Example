@@ -7,13 +7,15 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import javax.imageio.ImageIO;
+import java.util.Iterator;
 
 public class ProcessImage {
 	
 	@SuppressWarnings("unchecked")
-	public HashSet getImageColor(File imagePath) {
+	public void getImageColor(File imagePath) {
         int color=0;
         int count=0;
+        ColorUtils objColorUtils=new ColorUtils();
         HashSet hs=new HashSet();
 		try {
 			@SuppressWarnings("rawtypes")
@@ -35,9 +37,13 @@ public class ProcessImage {
 			e.printStackTrace();
 		}
 			
-		
+		Iterator itr = hs.iterator();
+		while(itr.hasNext()){
+			Color colorobj=(Color)itr.next();
+			System.out.println(objColorUtils.getColorNameFromRgb(colorobj.getRed(), colorobj.getGreen(), colorobj.getBlue()));
+		  }
 
-        return hs;
+        
     }
 
 

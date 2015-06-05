@@ -31,14 +31,14 @@ public class ModuleOneServer extends RoverServerRunnable {
 				System.out.println("Module 1 Server: Message Received from Client - "+ message.toUpperCase());
 				
 				// create ObjectOutputStream object
-				ObjectOutputStream outputToAnotherObject = new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
+				//ObjectOutputStream outputToAnotherObject = new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
 				
 				// write object to Socket
-				outputToAnotherObject.writeObject("Module 1 Server response Hi Client - " + message);
+				//outputToAnotherObject.writeObject("Module 1 Server response Hi Client - " + message);
 				
 				// close resources
 				inputFromAnotherObject.close();
-				outputToAnotherObject.close();
+				//outputToAnotherObject.close();
 				
 				// getRoverServerSocket().closeSocket();
 				// terminate the server if client sends exit request

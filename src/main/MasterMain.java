@@ -20,11 +20,12 @@ public class MasterMain {
 		int port_one = 9897;
 		int port_two = 9898;
 		int port_mahli = 9010;
+		int port_power = 9013;
 		
 		try {
 			
 			// create a thread for module one
-			ModuleOneServer serverOne = new ModuleOneServer(port_one);
+			ModuleOneServer serverOne = new ModuleOneServer(port_power);
 			Thread server_1 = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverOne);
 			
 			// create a thread for module two
@@ -39,7 +40,7 @@ public class MasterMain {
 			Thread client_3 = RoverThreadHandler.getRoverThreadHandler().getNewThread(clientMahli);
 			
 			// each server begins listening
-			//server_1.start();
+			server_1.start();
 			//server_2.start();
 			server_3.start();
 			client_3.start();

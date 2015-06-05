@@ -109,6 +109,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            			camOnStatus = false;
 		            			//System.out.println("Camera turned off");
 		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera turned off");
+		            			cb.done();
 		            		}
 		            		else
 		            		{
@@ -128,6 +129,7 @@ public class MAHLIServer extends RoverServerRunnable {
 	            				nightIlluminationStatus = true;
 	            				//System.out.println("Night Illumination turned On");
 	            				outputToAnotherObject.writeObject("MAHLI Server response - Night Illumination turned On");
+	            				cb.done();
 	            			}
 	            				
 	            		}
@@ -143,7 +145,7 @@ public class MAHLIServer extends RoverServerRunnable {
             				nightIlluminationStatus = false;
             				// System.out.println("Night Illumination is turned off");
             			    outputToAnotherObject.writeObject("Night Illumination is turned off");
-
+            			    cb.done();
             			}
             			else
             			{
@@ -170,6 +172,7 @@ public class MAHLIServer extends RoverServerRunnable {
             			{
             				// System.out.println("Auto Focus is now turned ON");
             				outputToAnotherObject.writeObject("Auto Focus is now turned ON");
+            				cb.done();
             				autoFocusStatus = true;
             			}
             				
@@ -188,6 +191,7 @@ public class MAHLIServer extends RoverServerRunnable {
 	            				autoFocusStatus = false;
 	            				// System.out.println("Auto Focus is now turned OFF");
 	            				outputToAnotherObject.writeObject("Auto Focus is now turned OFF");
+	            				cb.done();
 	            			}
 	            			else
 	            			{
@@ -212,7 +216,8 @@ public class MAHLIServer extends RoverServerRunnable {
             			else
             			{
             				// System.out.println("Video is now turned ON");
-            				outputToAnotherObject.writeObject("ideo is now turned ON");
+            				outputToAnotherObject.writeObject("Video is now turned ON");
+            				cb.done();
             				videoStatus = true;
             			}	
             		}
@@ -228,6 +233,7 @@ public class MAHLIServer extends RoverServerRunnable {
             				videoStatus = false;
             				// System.out.println("Video is now turned OFF");
             				outputToAnotherObject.writeObject("Video is now turned OFF");
+            				cb.done();
             			}
             			else
             			{
@@ -252,6 +258,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		        		capturedFile = new File(source.list()[index]);
 		        		System.out.println(capturedFile);
 		            	outputToAnotherObject.writeObject("Image Captured");
+		            	cb.done();
 
             		}
             		else
@@ -271,6 +278,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            				StandardCopyOption.REPLACE_EXISTING);
 		            		outputToAnotherObject.writeObject("Image Stored");
 		            		capturedFile = null;
+		            		cb.done();
 		            		}
 		            	else
 		            		outputToAnotherObject.writeObject("No image captured");
@@ -292,6 +300,7 @@ public class MAHLIServer extends RoverServerRunnable {
 			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and the "+"COLOR OF IMAGE IS ");
 			            	objprocessImage.getImageColor(file);
 			            	file.delete();
+			            	cb.done();
 			            }
 		            	else
 		            		outputToAnotherObject.writeObject("Image needs to be Captured First");
@@ -304,12 +313,15 @@ public class MAHLIServer extends RoverServerRunnable {
             		}
 		                     break;
 		            case 12: exitStatus = true;
+		            	outputToAnotherObject.writeObject("Exit");
+		            	cb.done();
 		                     break;
 		            case 13: 
 		            	outputToAnotherObject.writeObject("Invalid Command");
                     		 break;
 		            default: 
 		            		outputToAnotherObject.writeObject("Exit");
+		            		cb.done();
 		                     break;
 		        }
 		        

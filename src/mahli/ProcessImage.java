@@ -3,6 +3,8 @@ package mahli;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,11 +16,17 @@ import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class ProcessImage {
 	
 	@SuppressWarnings("unchecked")
-	public void getImageColor(File imagePath) {
+	public void getImageColor(File imagePath) throws FileNotFoundException, IOException, ParseException {
+		String jsonPath = "Mineral.json";
+		File jsonFile = new File(jsonPath);
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
         int color=0;
         int count=0;
         ColorUtils objColorUtils=new ColorUtils();
@@ -48,25 +56,25 @@ public class ProcessImage {
 		while(itr.hasNext()){
 			Color colorobj=(Color)itr.next();
 			Minfo=objColorUtils.getColorNameFromRgb(colorobj.getRed(), colorobj.getGreen(), colorobj.getBlue());
-			Integer c=0;
+			Double c=0.0;
 			String Mineral=Minfo.split(":")[1];
 			//System.out.println(Mineral);
-			if(hm.containsKey(Mineral))
+			if(jsonObj.containsKey(Mineral))
 			{
-				c=(Integer)hm.get(Mineral);
-				hm.put(Mineral,c+1);
+				c= (Double) jsonObj.get(Mineral);
+				jsonObj.put(Mineral,c+1.0);
 			}
 			else
 			{
-			hm.put(Mineral,1);
+			jsonObj.put(Mineral,1.0);
 			}
 		  }
-		System.out.println(hm);
-		JSONObject obj = new JSONObject(hm);
+		System.out.println(jsonObj);
+		//JSONObject obj = new JSONObject(hm);
 		
 		try {
 			FileWriter file = new FileWriter("Mineral.json");
-			file.write(obj.toJSONString());
+			file.write(jsonObj.toJSONString());
 			System.out.println("Data has been written to file Mineral.JSON");
 			file.flush();
 			file.close();

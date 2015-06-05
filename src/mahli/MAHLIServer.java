@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Random;
 
+import callback.CallBack;
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 
@@ -35,6 +36,8 @@ public class MAHLIServer extends RoverServerRunnable {
 		File source = new File("images");
 		File destination = new File("captured");
 		int port_power = 9013;
+		CallBack cb = new CallBack();
+		
 
 		try {
 			while (true) {
@@ -94,6 +97,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            			//System.out.println("Camera turned On");
 		            			camOnStatus = true;
 		            			MAHLIClient clientMahli = new MAHLIClient(port_power, null);
+		            			cb.done();
 		            			Thread client_3 = RoverThreadHandler.getRoverThreadHandler().getNewThread(clientMahli);
 		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera turned On ");
 		            			client_3.start();

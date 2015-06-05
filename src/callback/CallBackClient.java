@@ -39,7 +39,7 @@ public class CallBackClient extends RoverClientRunnable{
 			e.printStackTrace();
 		}
 		catch (Exception error) {
-			System.out.println("Client: Error:" + error.getMessage());
+			//System.out.println("Client: Error:" + error.getMessage());
 		}
 		
 	}

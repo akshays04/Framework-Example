@@ -206,7 +206,7 @@ public class MAHLIDummyUiClient extends RoverClientRunnable {
 		private void createAndShowGUI() {
 
 			// Create and set up the window.
-			JFrame frame = new JFrame("ButtonDemo");
+			JFrame frame = new JFrame("MAHLI Simulator App");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			// Create and set up the content pane.

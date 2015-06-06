@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import generic.RoverClientRunnable;
 
@@ -33,8 +34,12 @@ public class MAHLIDummyUiClient extends RoverClientRunnable {
 
 	public class ButtonDemo extends JPanel implements ActionListener {
 		protected JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12;
+		protected JTextArea ta;
 
 		public ButtonDemo() {
+			ta=new JTextArea(8,8);
+	    	ta.setLineWrap(true);
+	        ta.setWrapStyleWord(true);
 
 			b1 = new JButton("MAHLI_Camera_ON");
 			b1.setVerticalTextPosition(AbstractButton.CENTER);
@@ -124,10 +129,7 @@ public class MAHLIDummyUiClient extends RoverClientRunnable {
 			b11.addActionListener(this);
 			b12.addActionListener(this);
 
-			b1.setToolTipText("Click this button to disable the middle button.");
-			b2.setToolTipText("This middle button does nothing when you click it.");
-			b3.setToolTipText("Click this button to enable the middle button.");
-
+			
 			// Add Components to this container, using the default FlowLayout.
 			add(b1);
 			add(b2);
@@ -141,6 +143,7 @@ public class MAHLIDummyUiClient extends RoverClientRunnable {
 			add(b10);
 			add(b11);
 			add(b12);
+			add(ta);
 		}
 
 		public void actionPerformed(ActionEvent e) {

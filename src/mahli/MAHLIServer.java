@@ -276,7 +276,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            		Files.copy(new File(source.toString()+"/"+capturedFile.toString()).toPath(), 
 		            				new File(destination.toString()+"/"+ capturedFile.toString()).toPath(), 
 		            				StandardCopyOption.REPLACE_EXISTING);
-		            		outputToAnotherObject.writeObject("Image Stored");
+		            		outputToAnotherObject.writeObject("Image Stored - "+capturedFile.toString());
 		            		capturedFile = null;
 		            		cb.done();
 		            		}
@@ -286,7 +286,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            else
             		{
             			// System.out.println("Please turn on the camera to proceed");
-            			outputToAnotherObject.writeObject("IPlease turn on the camera to proceed");
+            			outputToAnotherObject.writeObject("Please turn on the camera to proceed");
             		}
 		                     break;
 		            case 11: if(camOnStatus)
@@ -297,7 +297,7 @@ public class MAHLIServer extends RoverServerRunnable {
 			            	imageReadStatus = true;
 			            	System.out.println(file.toString());
 			            	//outputToAnotherObject.writeObject("Image Read");
-			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and the "+"COLOR OF IMAGE IS ");
+			            	outputToAnotherObject.writeObject("Image Detected "+file.toString()+" and Processed.");
 			            	objprocessImage.getImageColor(file);
 			            	file.delete();
 			            	cb.done();

@@ -82,7 +82,7 @@ public class ProcessImage {
 		//JSONObject obj = new JSONObject(hm);
 		
 		try {
-			FileWriter file = new FileWriter("Mineral.json");
+			FileWriter file = new FileWriter("data.json");
 			file.write(jArr.toJSONString());
 			System.out.println("Data has been written to file Mineral.JSON");
 			file.flush();

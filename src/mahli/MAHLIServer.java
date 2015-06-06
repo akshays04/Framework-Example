@@ -91,7 +91,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            case 1:  
 		            		if(camOnStatus){
 		            			//System.out.println("Camera is already On");
-		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera is already On");
+		            			outputToAnotherObject.writeObject("Camera is already On");
 		            		}
 		            		else{
 		            			//System.out.println("Camera turned On");
@@ -99,7 +99,7 @@ public class MAHLIServer extends RoverServerRunnable {
 		            			MAHLIClient clientMahli = new MAHLIClient(port_power, null);
 		            			cb.done();
 		            			Thread client_3 = RoverThreadHandler.getRoverThreadHandler().getNewThread(clientMahli);
-		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera turned On ");
+		            			outputToAnotherObject.writeObject("Camera turned On ");
 		            			client_3.start();
 		            			}
 		                     break;
@@ -108,13 +108,13 @@ public class MAHLIServer extends RoverServerRunnable {
 		            		{
 		            			camOnStatus = false;
 		            			//System.out.println("Camera turned off");
-		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera turned off");
+		            			outputToAnotherObject.writeObject("Camera turned off");
 		            			cb.done();
 		            		}
 		            		else
 		            		{
 		            			//System.out.println("Camera is already turned off");
-		            			outputToAnotherObject.writeObject("MAHLI Server response - Camera is already turned off");
+		            			outputToAnotherObject.writeObject("Camera is already turned off");
 		            		}
 		                     break;
 		            case 3:  
@@ -122,13 +122,13 @@ public class MAHLIServer extends RoverServerRunnable {
 	            		{
 	            			if(nightIlluminationStatus){
 	            				//System.out.println("Night Illumination is already tuned on");
-	            				outputToAnotherObject.writeObject("MAHLI Server response - Night Illumination is already tuned on");
+	            				outputToAnotherObject.writeObject("Night Illumination is already tuned on");
 	            			}
 	            			else
 	            			{
 	            				nightIlluminationStatus = true;
 	            				//System.out.println("Night Illumination turned On");
-	            				outputToAnotherObject.writeObject("MAHLI Server response - Night Illumination turned On");
+	            				outputToAnotherObject.writeObject("Night Illumination turned On");
 	            				cb.done();
 	            			}
 	            				

@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import mahli.MAHLIClient;
 import mahli.MAHLIDummyClient;
+import mahli.MAHLIDummyUiClient;
 import mahli.MAHLIServer;
 import module1.ModuleOneClient;
 import module1.ModuleOneServer;
@@ -33,7 +34,7 @@ public class MasterMain {
 			MAHLIServer serverMahli = new MAHLIServer(port_mahli);
 			Thread server_3 = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverMahli);
 						
-			MAHLIDummyClient clientMahli = new MAHLIDummyClient(port_mahli, null);
+			MAHLIDummyUiClient clientMahli = new MAHLIDummyUiClient(port_mahli, null);
 			Thread client_3 = RoverThreadHandler.getRoverThreadHandler().getNewThread(clientMahli);
 						
 			// each server begins listening

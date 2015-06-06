@@ -23,15 +23,17 @@ public class ProcessImage {
 	
 	@SuppressWarnings("unchecked")
 	public void getImageColor(File imagePath) throws FileNotFoundException, IOException, ParseException {
-		String jsonPath = "Mineral.json";
-		File jsonFile = new File(jsonPath);
-		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObj = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
+		//String jsonPath = "Mineral.json";
+		//File jsonFile = new File(jsonPath);
+		//JSONParser jsonParser = new JSONParser();
+		//JSONObject jsonObj = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
+		JSONArray jArr = new JSONArray();
+		JSONObject jsonObj;
         int color=0;
         int count=0;
         ColorUtils objColorUtils=new ColorUtils();
         HashSet hs=new HashSet();
-        HashMap hm=new HashMap();
+        HashMap<String, Integer> hm=new HashMap<String, Integer>();
 		try {
 			@SuppressWarnings("rawtypes")
 			
@@ -56,25 +58,32 @@ public class ProcessImage {
 		while(itr.hasNext()){
 			Color colorobj=(Color)itr.next();
 			Minfo=objColorUtils.getColorNameFromRgb(colorobj.getRed(), colorobj.getGreen(), colorobj.getBlue());
-			Double c=0.0;
+			int c=0;
 			String Mineral=Minfo.split(":")[1];
 			//System.out.println(Mineral);
-			if(jsonObj.containsKey(Mineral))
+			if(hm.containsKey(Mineral))
 			{
-				c= (Double) jsonObj.get(Mineral);
-				jsonObj.put(Mineral,c+1.0);
+				c= (Integer) hm.get(Mineral);
+				hm.put(Mineral,c+1);
 			}
 			else
 			{
-			jsonObj.put(Mineral,1.0);
+			hm.put(Mineral,1);
 			}
 		  }
-		System.out.println(jsonObj);
+		
+		for(String key : hm.keySet()){
+			jsonObj = new JSONObject();
+			jsonObj.put("name", key);
+			jsonObj.put("count", hm.get(key));
+			jArr.add(jsonObj);
+		}
+		System.out.println(hm);
 		//JSONObject obj = new JSONObject(hm);
 		
 		try {
 			FileWriter file = new FileWriter("Mineral.json");
-			file.write(jsonObj.toJSONString());
+			file.write(jArr.toJSONString());
 			System.out.println("Data has been written to file Mineral.JSON");
 			file.flush();
 			file.close();
